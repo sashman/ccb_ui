@@ -21,13 +21,14 @@ import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
-import LogoutButton from "components/LogoutButton/LogoutButton";
 import Email from "components/CurrentUser/Email";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
+  const { logout } = useAuth0();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = (event) => {
@@ -50,6 +51,7 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+  const handleLogout = () => logout();
   return (
     <div>
       <div className={classes.searchWrapper}>
@@ -212,8 +214,11 @@ export default function AdminNavbarLinks() {
                       Settings
                     </MenuItem>
                     <Divider light />
-                    <MenuItem>
-                      <LogoutButton />
+                    <MenuItem
+                      onClick={handleLogout}
+                      className={classes.dropdownItem}
+                    >
+                      Logout
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
