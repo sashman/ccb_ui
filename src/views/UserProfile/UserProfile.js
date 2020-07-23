@@ -166,7 +166,7 @@ export default function UserProfile() {
               <h6 className={classes.cardCategory}>{user.email}</h6>
               <h4 className={classes.cardTitle}>{user.name}</h4>
               <div className={classes.description}>
-                <h3>Roles:</h3>
+                <h6>Roles:</h6>
                 {getRoles(user).map((role) => (
                   <div key={role}>{role}</div>
                 ))}
