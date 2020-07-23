@@ -32,6 +32,7 @@ ReactDOM.render(
   <Auth0Provider
     domain="ccbapp.eu.auth0.com"
     clientId="IvOhpg8yK27vRk6lihM5p1ZoHjCek6kG"
+    cacheLocation="localstorage"
     redirectUri="http://localhost:3000/admin/dashboard"
   >
     <Router history={hist}>
