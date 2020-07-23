@@ -19,22 +19,27 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 // core components
 import Admin from "layouts/Admin.js";
-import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" component={Admin} />
-      <Route path="/rtl" component={RTL} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </Router>,
+  <Auth0Provider
+    domain="ccbapp.eu.auth0.com"
+    clientId="IvOhpg8yK27vRk6lihM5p1ZoHjCek6kG"
+    redirectUri="http://localhost:3000/admin/dashboard"
+  >
+    <Router history={hist}>
+      <Switch>
+        <Route path="/admin" component={Admin} />
+        <Redirect from="/" to="/admin/dashboard" />
+      </Switch>
+    </Router>
+  </Auth0Provider>,
   document.getElementById("root")
 );
