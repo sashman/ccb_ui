@@ -33,29 +33,50 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 import { useAuth0 } from "@auth0/auth0-react";
 
 import roles from "helpers/roles";
+import tenants from "helpers/tenants";
 import TenantList from "./Widgets/TenantList";
-import AuthProvider from "components/Auth/AuthProvider";
-
-const useStyles = makeStyles(styles);
-
-const tenantList = () => (
-  <GridItem xs={12} sm={12} md={3}>
-    <TenantList />
-  </GridItem>
-);
+import CreateYourTenant from "./NoTenant/CreateYourTenant";
 
 export default function Dashboard() {
   const { hasRole, SUPERUSER } = roles;
+  const { hasTenant } = tenants;
   const { user, isAuthenticated } = useAuth0();
 
   if (!isAuthenticated) {
     return null;
   }
 
-  console.log(hasRole(user, SUPERUSER));
+  if (hasRole(user, SUPERUSER)) {
+    return (
+      <div>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={3}>
+            <TenantList />
+          </GridItem>
+        </GridContainer>
+        <GridContainer></GridContainer>
+        <GridContainer></GridContainer>
+      </div>
+    );
+  }
+
+  if (hasTenant(user)) {
+    return (
+      <div>
+        <GridContainer>Welcome!</GridContainer>
+        <GridContainer></GridContainer>
+        <GridContainer></GridContainer>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <GridContainer>{hasRole(user, SUPERUSER) && tenantList()}</GridContainer>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={6}>
+          <CreateYourTenant />
+        </GridItem>
+      </GridContainer>
       <GridContainer></GridContainer>
       <GridContainer></GridContainer>
     </div>
