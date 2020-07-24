@@ -18,6 +18,7 @@ import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { useAuth0 } from "@auth0/auth0-react";
+import AuthProvider from "components/Auth/AuthProvider";
 
 let ps;
 

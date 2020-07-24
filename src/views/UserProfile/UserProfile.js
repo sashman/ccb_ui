@@ -15,7 +15,7 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import avatar from "assets/img/faces/marc.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
-import getRoles from "helpers/roles";
+import roles from "helpers/roles";
 
 const styles = {
   cardCategoryWhite: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const classes = useStyles();
   const { user } = useAuth0();
-  console.log(user);
+
   return (
     <div>
       <GridContainer>
@@ -167,7 +167,7 @@ export default function UserProfile() {
               <h4 className={classes.cardTitle}>{user.name}</h4>
               <div className={classes.description}>
                 <h6>Roles:</h6>
-                {getRoles(user).map((role) => (
+                {roles.getRoles(user).map((role) => (
                   <div key={role}>{role}</div>
                 ))}
               </div>

@@ -25,6 +25,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import Admin from "layouts/Admin.js";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
+import AuthProvider from "components/Auth/AuthProvider";
 
 const hist = createBrowserHistory();
 
@@ -35,12 +36,14 @@ ReactDOM.render(
     cacheLocation="localstorage"
     redirectUri="http://localhost:3000/admin/dashboard"
   >
-    <Router history={hist}>
-      <Switch>
-        <Route path="/admin" component={Admin} />
-        <Redirect from="/" to="/admin/dashboard" />
-      </Switch>
-    </Router>
+    <AuthProvider>
+      <Router history={hist}>
+        <Switch>
+          <Route path="/admin" component={Admin} />
+          <Redirect from="/" to="/admin/dashboard" />
+        </Switch>
+      </Router>
+    </AuthProvider>
   </Auth0Provider>,
   document.getElementById("root")
 );

@@ -32,19 +32,30 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import { useAuth0 } from "@auth0/auth0-react";
 
+import roles from "helpers/roles";
+import TenantList from "./Widgets/TenantList";
+import AuthProvider from "components/Auth/AuthProvider";
+
 const useStyles = makeStyles(styles);
 
+const tenantList = () => (
+  <GridItem xs={12} sm={12} md={3}>
+    <TenantList />
+  </GridItem>
+);
+
 export default function Dashboard() {
-  const classes = useStyles();
-  const { isAuthenticated } = useAuth0();
+  const { hasRole, SUPERUSER } = roles;
+  const { user, isAuthenticated } = useAuth0();
 
   if (!isAuthenticated) {
     return null;
   }
 
+  console.log(hasRole(user, SUPERUSER));
   return (
     <div>
-      <GridContainer></GridContainer>
+      <GridContainer>{hasRole(user, SUPERUSER) && tenantList()}</GridContainer>
       <GridContainer></GridContainer>
       <GridContainer></GridContainer>
     </div>
