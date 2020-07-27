@@ -52,6 +52,7 @@ export default function AdminNavbarLinks() {
     setOpenProfile(null);
   };
   const handleLogout = () => logout();
+
   return (
     <div>
       <div className={classes.searchWrapper}>

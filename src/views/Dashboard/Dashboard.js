@@ -36,10 +36,11 @@ import roles from "helpers/roles";
 import tenants from "helpers/tenants";
 import TenantList from "./Widgets/TenantList";
 import CreateYourTenant from "./NoTenant/CreateYourTenant";
+import { useTenant } from "components/Tenant/ProvideTenant";
 
 export default function Dashboard() {
   const { hasRole, SUPERUSER } = roles;
-  const { hasTenant } = tenants;
+  const { tenant } = useTenant();
   const { user, isAuthenticated } = useAuth0();
 
   if (!isAuthenticated) {
@@ -60,7 +61,7 @@ export default function Dashboard() {
     );
   }
 
-  if (hasTenant(user)) {
+  if (tenant) {
     return (
       <div>
         <GridContainer>Welcome!</GridContainer>
@@ -74,7 +75,7 @@ export default function Dashboard() {
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
-          <CreateYourTenant />
+          <CreateYourTenant user={user} />
         </GridItem>
       </GridContainer>
       <GridContainer></GridContainer>

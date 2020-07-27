@@ -4,7 +4,7 @@ import { Provider } from "use-http";
 import { useAuth0 } from "@auth0/auth0-react";
 import { apiUrl } from "config";
 
-export default function AuthProvider({ children }) {
+export default function BackendApiProvider({ children }) {
   const { getIdTokenClaims } = useAuth0();
 
   const options = {
@@ -15,7 +15,6 @@ export default function AuthProvider({ children }) {
       request: async ({ options }) => {
         const claims = await getIdTokenClaims();
         const token = claims.__raw;
-        console.log(token);
         options.headers.Authorization = `Bearer ${token}`;
         return options;
       },
@@ -35,6 +34,6 @@ export default function AuthProvider({ children }) {
   );
 }
 
-AuthProvider.propTypes = {
+BackendApiProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };

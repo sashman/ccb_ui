@@ -17,6 +17,7 @@ import Button from "components/CustomButtons/Button.js";
 import LoginButton from "components/LoginButton/LoginButton";
 
 import styles from "assets/jss/material-dashboard-react/components/headerStyle.js";
+import { useTenant } from "components/Tenant/ProvideTenant.js";
 
 const useStyles = makeStyles(styles);
 
@@ -24,6 +25,7 @@ export default function Header(props) {
   const classes = useStyles();
 
   const { isAuthenticated } = useAuth0();
+  const { tenant } = useTenant();
   function makeBrand() {
     var name;
     props.routes.map((prop) => {
@@ -44,7 +46,7 @@ export default function Header(props) {
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
+            {makeBrand()}: {tenant}
           </Button>
         </div>
         <Hidden smDown implementation="css">

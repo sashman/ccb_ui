@@ -23,27 +23,33 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 // core components
 import Admin from "layouts/Admin.js";
+import { auth0ApiUrl } from "config";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
-import AuthProvider from "components/Auth/AuthProvider";
+import BackendApiProvider from "components/Auth/BackendApiProvider";
+import { ProvideTenant } from "components/Tenant/ProvideTenant";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Auth0Provider
     domain="ccbapp.eu.auth0.com"
+    audience={`${auth0ApiUrl}/`}
     clientId="IvOhpg8yK27vRk6lihM5p1ZoHjCek6kG"
     cacheLocation="localstorage"
+    scope="read:current_user update:current_user_metadata"
     redirectUri="http://localhost:3000/admin/dashboard"
   >
-    <AuthProvider>
-      <Router history={hist}>
-        <Switch>
-          <Route path="/admin" component={Admin} />
-          <Redirect from="/" to="/admin/dashboard" />
-        </Switch>
-      </Router>
-    </AuthProvider>
+    <BackendApiProvider>
+      <ProvideTenant>
+        <Router history={hist}>
+          <Switch>
+            <Route path="/admin" component={Admin} />
+            <Redirect from="/" to="/admin/dashboard" />
+          </Switch>
+        </Router>
+      </ProvideTenant>
+    </BackendApiProvider>
   </Auth0Provider>,
   document.getElementById("root")
 );

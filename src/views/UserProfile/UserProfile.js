@@ -13,9 +13,10 @@ import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
-import avatar from "assets/img/faces/marc.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
 import roles from "helpers/roles";
+import Auth0ApiProvider from "components/Auth/Auth0ApiProvider";
+import Auth0UserMetadata from "components/Auth/Auth0UserMetaData";
 
 const styles = {
   cardCategoryWhite: {
@@ -171,6 +172,9 @@ export default function UserProfile() {
                   <div key={role}>{role}</div>
                 ))}
               </div>
+              <Auth0ApiProvider>
+                <Auth0UserMetadata />
+              </Auth0ApiProvider>
             </CardBody>
           </Card>
         </GridItem>
