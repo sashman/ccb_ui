@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -15,7 +14,7 @@ import { useTenant } from "components/Tenant/ProvideTenant";
 
 const useStyles = makeStyles(styles);
 
-export default function CreateYourTenant({ user }) {
+export default function CreateYourTenant() {
   const classes = useStyles();
   const SUBDOMIAN_REGEX = /^[A-z0-9-]+$/;
   const [validName, setValidName] = useState(true);
@@ -87,7 +86,3 @@ export default function CreateYourTenant({ user }) {
     </Card>
   );
 }
-
-CreateYourTenant.propTypes = {
-  user: PropTypes.object.isRequired,
-};

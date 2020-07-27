@@ -1,5 +1,6 @@
 // Hook (use-auth.js)
 import React, { useState, useContext, createContext } from "react";
+import PropTypes from "prop-types";
 import { auth0ApiUrl } from "config";
 import { useAuth0 } from "@auth0/auth0-react";
 import useFetch from "use-http";
@@ -69,3 +70,6 @@ function useProvideTenant() {
     tenant: tenantCache || tenants.getTenantFromUser(user),
   };
 }
+ProvideTenant.propTypes = {
+  children: PropTypes.element.isRequired,
+};

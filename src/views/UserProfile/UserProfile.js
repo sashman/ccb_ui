@@ -172,9 +172,6 @@ export default function UserProfile() {
                   <div key={role}>{role}</div>
                 ))}
               </div>
-              <Auth0ApiProvider>
-                <Auth0UserMetadata />
-              </Auth0ApiProvider>
             </CardBody>
           </Card>
         </GridItem>
