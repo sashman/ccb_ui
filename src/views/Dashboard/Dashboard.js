@@ -33,8 +33,8 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 import { useAuth0 } from "@auth0/auth0-react";
 
 import roles from "helpers/roles";
-import tenants from "helpers/tenants";
 import TenantList from "./Widgets/TenantList";
+import ProductList from "./Widgets/ProductList";
 import CreateYourTenant from "./NoTenant/CreateYourTenant";
 import { useTenant } from "components/Tenant/ProvideTenant";
 
@@ -48,34 +48,49 @@ export default function Dashboard() {
   }
 
   if (hasRole(user, SUPERUSER)) {
-    return (
-      <div>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={3}>
-            <TenantList />
-          </GridItem>
-        </GridContainer>
-        <GridContainer></GridContainer>
-        <GridContainer></GridContainer>
-      </div>
-    );
+    return superuserWidgets();
   }
 
   if (tenant) {
-    return (
-      <div>
-        <GridContainer>Welcome!</GridContainer>
-        <GridContainer></GridContainer>
-        <GridContainer></GridContainer>
-      </div>
-    );
+    return userWidgets();
   }
 
+  return noTenantWidgets(user);
+}
+function noTenantWidgets(user) {
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
           <CreateYourTenant user={user} />
+        </GridItem>
+      </GridContainer>
+      <GridContainer></GridContainer>
+      <GridContainer></GridContainer>
+    </div>
+  );
+}
+
+function userWidgets() {
+  return (
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={3}>
+          <ProductList />
+        </GridItem>
+      </GridContainer>
+      <GridContainer></GridContainer>
+      <GridContainer></GridContainer>
+    </div>
+  );
+}
+
+function superuserWidgets() {
+  return (
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={3}>
+          <TenantList />
         </GridItem>
       </GridContainer>
       <GridContainer></GridContainer>

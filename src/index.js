@@ -40,16 +40,16 @@ ReactDOM.render(
     scope="read:current_user update:current_user_metadata"
     redirectUri="http://localhost:3000/admin/dashboard"
   >
-    <BackendApiProvider>
-      <ProvideTenant>
+    <ProvideTenant>
+      <BackendApiProvider>
         <Router history={hist}>
           <Switch>
             <Route path="/admin" component={Admin} />
             <Redirect from="/" to="/admin/dashboard" />
           </Switch>
         </Router>
-      </ProvideTenant>
-    </BackendApiProvider>
+      </BackendApiProvider>
+    </ProvideTenant>
   </Auth0Provider>,
   document.getElementById("root")
 );

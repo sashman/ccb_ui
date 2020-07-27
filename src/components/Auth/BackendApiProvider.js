@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import { Provider } from "use-http";
 import { useAuth0 } from "@auth0/auth0-react";
 import { apiUrl } from "config";
+import { useTenant } from "components/Tenant/ProvideTenant";
 
 export default function BackendApiProvider({ children }) {
   const { getIdTokenClaims } = useAuth0();
+  const { tenant } = useTenant();
 
   const options = {
     interceptors: {
@@ -27,8 +29,10 @@ export default function BackendApiProvider({ children }) {
     },
   };
 
+  const url = tenant ? apiUrl.replace(/:\/\//, `://${tenant}.`) : apiUrl;
+
   return (
-    <Provider url={apiUrl} options={options}>
+    <Provider url={url} options={options}>
       {children}
     </Provider>
   );
