@@ -24,13 +24,14 @@ export default function TenantList() {
     return "Loading...";
   }
 
+  const tableData = data.tenants.map((tenant) => [tenant]);
   return (
     <Card>
       <CardHeader color="success">
         <h4 className={classes.cardTitleWhite}>Tenants</h4>
       </CardHeader>
       <CardBody>
-        <Table tableHeaderColor="success" tableData={[data.tenants]} />
+        <Table tableHeaderColor="success" tableData={tableData} />
       </CardBody>
     </Card>
   );
