@@ -37,6 +37,7 @@ import TenantList from "./Widgets/TenantList";
 import ProductList from "./Widgets/ProductList";
 import CreateYourTenant from "./NoTenant/CreateYourTenant";
 import { useTenant } from "components/Tenant/ProvideTenant";
+import ItemList from "./Widgets/ItemList";
 
 export default function Dashboard() {
   const { hasRole, SUPERUSER } = roles;
@@ -77,6 +78,9 @@ function userWidgets() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={3}>
           <ProductList />
+        </GridItem>
+        <GridItem xs={12} sm={12} md={3}>
+          <ItemList />
         </GridItem>
       </GridContainer>
       <GridContainer></GridContainer>

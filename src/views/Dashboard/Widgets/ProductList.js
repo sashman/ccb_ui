@@ -39,7 +39,6 @@ export default function ProductList() {
   };
 
   const handleSubmit = async () => {
-    console.log(formFields);
     const newProduct = await post({ product: formFields });
 
     if (response.ok) {
@@ -75,7 +74,6 @@ export default function ProductList() {
     ? products.map(({ title, description }) => [title, description])
     : [];
 
-  console.log(products);
   return (
     <Card>
       <CardHeader color="success">
