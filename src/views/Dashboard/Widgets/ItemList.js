@@ -22,7 +22,9 @@ export default function ItemList() {
   const [formFields, setFormFields] = useState({});
   const [items, setItems] = useState([]);
   const onFieldsChange = (fieldName) => (e) => {
-    const { value } = e.currentTarget;
+    const target = e.target || e.currentTarget;
+    const { value } = target;
+    console.log(value);
 
     setFormFields({
       ...formFields,
@@ -77,7 +79,11 @@ export default function ItemList() {
   }
 
   const tableData = items
-    ? items.map(({ sku, quantity }) => [sku, quantity])
+    ? items.map(({ sku, quantity, product: { title } }) => [
+        title,
+        sku,
+        quantity,
+      ])
     : [];
 
   return (

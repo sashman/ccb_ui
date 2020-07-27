@@ -90,7 +90,7 @@ const SelectFieldBase = (props) => {
         inputProps={inputProps}
         inputRef={inputRef}
         placeholder={placeholder}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange(event)}
         input={<Input id={id} />}
         {...InputProps}
       >

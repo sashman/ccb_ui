@@ -52,6 +52,7 @@ export default function FormDialog({
                 label={label}
                 type={type}
                 options={selectFrom}
+                onChange={onFieldsChange(id)}
                 fullWidth
               />
             )
