@@ -1,5 +1,5 @@
 export default {
-  SUPERUSER: "superuser",
-  getRoles: (user) => user["http://ccb.com/role"],
-  hasRole: (user, role) => user["http://ccb.com/role"].includes(role),
+  SUPERUSER: "Superuser",
+  getRoles: (user) => user.groups,
+  hasRole: (user, role) => user.groups.includes(role),
 };

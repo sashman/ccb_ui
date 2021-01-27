@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Provider } from "use-http";
-import { useAuth0 } from "@auth0/auth0-react";
 import { auth0ApiUrl } from "config";
 
 export default function Auth0ApiProvider({ children }) {
-  const { getIdTokenClaims } = useAuth0();
+  const { getIdTokenClaims } = {};
 
   const options = {
     interceptors: {

@@ -1,9 +1,24 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useOktaAuth } from "@okta/okta-react";
+import { useEffect, useState } from "react";
 
 const Email = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const {
+    oktaAuth,
+    authState: { isAuthenticated },
+  } = useOktaAuth();
+  const [user, setUser] = useState(null);
 
-  return isAuthenticated ? user.email : "Not logged in";
+  useEffect(() => {
+    async function getUser() {
+      const user = await oktaAuth.getUser();
+      setUser(user);
+    }
+    getUser();
+  }, []);
+
+  console.log(user);
+
+  return isAuthenticated && user ? user.email : "Not logged in";
 };
 
 export default Email;

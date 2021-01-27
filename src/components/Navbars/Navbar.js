@@ -9,7 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
 // @material-ui/icons
 import Menu from "@material-ui/icons/Menu";
-import { useAuth0 } from "@auth0/auth0-react";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.js";
 import Button from "components/CustomButtons/Button.js";
@@ -18,13 +17,16 @@ import LoginButton from "components/LoginButton/LoginButton";
 
 import styles from "assets/jss/material-dashboard-react/components/headerStyle.js";
 import { useTenant } from "components/Tenant/ProvideTenant.js";
+import SignInForm from "components/SignInForm/SignInForm.js";
+import { useOktaAuth } from "@okta/okta-react";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
   const classes = useStyles();
+  const { authState } = useOktaAuth();
+  const { isAuthenticated } = authState;
 
-  const { isAuthenticated } = useAuth0();
   const { tenant } = useTenant();
   function makeBrand() {
     var name;
@@ -50,7 +52,7 @@ export default function Header(props) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          {isAuthenticated ? <AdminNavbarLinks /> : <LoginButton />}
+          {isAuthenticated ? <AdminNavbarLinks /> : <SignInForm />}
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton

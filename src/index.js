@@ -19,11 +19,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Security, LoginCallback } from "@okta/okta-react";
+import { OktaAuth } from "@okta/okta-auth-js";
 
 // core components
 import Admin from "layouts/Admin.js";
-import { auth0ApiUrl } from "config";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 import BackendApiProvider from "components/Auth/BackendApiProvider";
@@ -31,25 +31,27 @@ import { ProvideTenant } from "components/Tenant/ProvideTenant";
 
 const hist = createBrowserHistory();
 
+const oktaAuth = new OktaAuth({
+  issuer: "https://dev-27751295.okta.com/oauth2/default",
+  clientId: "0oa4fqd3vqYLnBEi75d6",
+  redirectUri: window.location.origin + "/login/callback",
+  // onAuthRequired: onAuthRequired,
+  pkce: true,
+});
+
 ReactDOM.render(
-  <Auth0Provider
-    domain="ccbapp.eu.auth0.com"
-    audience={`${auth0ApiUrl}/`}
-    clientId="IvOhpg8yK27vRk6lihM5p1ZoHjCek6kG"
-    cacheLocation="localstorage"
-    scope="read:current_user update:current_user_metadata"
-    redirectUri="http://localhost:3000/admin/dashboard"
-  >
-    <ProvideTenant>
-      <BackendApiProvider>
-        <Router history={hist}>
+  <ProvideTenant>
+    <Router history={hist}>
+      <Security oktaAuth={oktaAuth}>
+        <BackendApiProvider>
           <Switch>
+            <Route path="/login/callback" component={LoginCallback} />
             <Route path="/admin" component={Admin} />
             <Redirect from="/" to="/admin/dashboard" />
           </Switch>
-        </Router>
-      </BackendApiProvider>
-    </ProvideTenant>
-  </Auth0Provider>,
+        </BackendApiProvider>
+      </Security>
+    </Router>
+  </ProvideTenant>,
   document.getElementById("root")
 );

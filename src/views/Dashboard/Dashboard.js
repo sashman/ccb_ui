@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -30,7 +30,6 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import roles from "helpers/roles";
 import TenantList from "./Widgets/TenantList";
@@ -39,13 +38,30 @@ import CreateYourTenant from "./NoTenant/CreateYourTenant";
 import { useTenant } from "components/Tenant/ProvideTenant";
 import ItemList from "./Widgets/ItemList";
 import StorefrontIntegrationList from "./Widgets/StorefrontIntegrationList";
+import { useOktaAuth } from "@okta/okta-react";
 
 export default function Dashboard() {
   const { hasRole, SUPERUSER } = roles;
   const { tenant } = useTenant();
-  const { user, isAuthenticated } = useAuth0();
+  const {
+    oktaAuth,
+    authState: { isAuthenticated },
+  } = useOktaAuth();
 
-  if (!isAuthenticated) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function getUser() {
+      if (!isAuthenticated) {
+        return;
+      }
+      const user = await oktaAuth.getUser();
+      setUser(user);
+    }
+    getUser();
+  }, [isAuthenticated]);
+
+  if (!isAuthenticated || !user) {
     return null;
   }
 

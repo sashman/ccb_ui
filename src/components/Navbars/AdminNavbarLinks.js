@@ -15,6 +15,9 @@ import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
+
+import { useOktaAuth } from "@okta/okta-react";
+
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
@@ -22,13 +25,12 @@ import Button from "components/CustomButtons/Button.js";
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 import Email from "components/CurrentUser/Email";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
-  const { logout } = useAuth0();
+  const { authState, oktaAuth } = useOktaAuth();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = (event) => {
@@ -51,7 +53,6 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
-  const handleLogout = () => logout();
 
   return (
     <div>
@@ -215,12 +216,19 @@ export default function AdminNavbarLinks() {
                       Settings
                     </MenuItem>
                     <Divider light />
-                    <MenuItem
-                      onClick={handleLogout}
-                      className={classes.dropdownItem}
-                    >
-                      Logout
-                    </MenuItem>
+                    {authState.isAuthenticated && (
+                      <MenuItem
+                        onClick={() => {
+                          oktaAuth.signOut({
+                            postLogoutRedirectUri:
+                              window.location.origin + "/admin/dashboard",
+                          });
+                        }}
+                        className={classes.dropdownItem}
+                      >
+                        Logout
+                      </MenuItem>
+                    )}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

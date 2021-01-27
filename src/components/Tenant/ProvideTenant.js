@@ -2,7 +2,6 @@
 import React, { useState, useContext, createContext } from "react";
 import PropTypes from "prop-types";
 import { auth0ApiUrl } from "config";
-import { useAuth0 } from "@auth0/auth0-react";
 import useFetch from "use-http";
 import tenants from "helpers/tenants";
 
@@ -26,7 +25,7 @@ export const useTenant = () => {
 };
 
 function useProvideTenant() {
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = {};
   const [tenantCache, setTenantCache] = useState(null);
 
   const { patch, get } = useFetch(auth0ApiUrl, {

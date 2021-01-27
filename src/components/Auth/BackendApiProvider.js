@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Provider } from "use-http";
-import { useAuth0 } from "@auth0/auth0-react";
 import { apiUrl } from "config";
 import { useTenant } from "components/Tenant/ProvideTenant";
+import { useOktaAuth } from "@okta/okta-react";
 
 export default function BackendApiProvider({ children }) {
-  const { getIdTokenClaims } = useAuth0();
+  const { authState } = useOktaAuth();
+
+  const { accessToken } = authState;
   const { tenant } = useTenant();
 
   const options = {
@@ -15,8 +17,7 @@ export default function BackendApiProvider({ children }) {
       // url, path and route are supplied to the interceptor
       // request options can be modified and must be returned
       request: async ({ options }) => {
-        const claims = await getIdTokenClaims();
-        const token = claims.__raw;
+        const token = accessToken.accessToken;
         options.headers.Authorization = `Bearer ${token}`;
         return options;
       },

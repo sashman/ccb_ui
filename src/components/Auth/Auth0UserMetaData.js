@@ -1,10 +1,10 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import useFetch from "use-http";
 import { auth0ApiUrl } from "config";
 
 export default function Auth0UserMetadata() {
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = {};
 
   const path = `${auth0ApiUrl}/users/${user.sub}`;
   const options = {

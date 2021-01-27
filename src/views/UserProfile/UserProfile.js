@@ -13,10 +13,7 @@ import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
-import { useAuth0 } from "@auth0/auth0-react";
 import roles from "helpers/roles";
-import Auth0ApiProvider from "components/Auth/Auth0ApiProvider";
-import Auth0UserMetadata from "components/Auth/Auth0UserMetaData";
 
 const styles = {
   cardCategoryWhite: {
@@ -41,7 +38,7 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
-  const { user } = useAuth0();
+  const { user } = {};
 
   return (
     <div>
