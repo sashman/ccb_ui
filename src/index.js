@@ -35,7 +35,6 @@ const oktaAuth = new OktaAuth({
   issuer: "https://dev-27751295.okta.com/oauth2/default",
   clientId: "0oa4fqd3vqYLnBEi75d6",
   redirectUri: window.location.origin + "/login/callback",
-  // onAuthRequired: onAuthRequired,
   pkce: true,
 });
 
